@@ -1,0 +1,66 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "5896abe3245fd069d06f13ee0ae02776",
+    "packages": [
+        {
+            "name": "klebervmv/easycurl",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klebervmv/easyCurl.git",
+                "reference": "118d58069a1ea81e75c1ce1b228b5a2a1b104015"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klebervmv/easyCurl/zipball/118d58069a1ea81e75c1ce1b228b5a2a1b104015",
+                "reference": "118d58069a1ea81e75c1ce1b228b5a2a1b104015",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "klebervmv\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kleberton Vilela",
+                    "email": "klebervmv@gmail.com",
+                    "homepage": "https://github.com/klebervmv"
+                }
+            ],
+            "description": "EasyCurl is a library that facilitates the use of Curl requests",
+            "support": {
+                "issues": "https://github.com/klebervmv/easyCurl/issues",
+                "source": "https://github.com/klebervmv/easyCurl/tree/1.0.5"
+            },
+            "time": "2021-05-24T17:31:57+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.2",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}

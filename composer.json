@@ -1,0 +1,24 @@
+{
+    "name": "parceladousa/gateway",
+    "description": "Package to assist in payment integration with ParceladoUSA",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ParceladoUSA",
+            "email": "suporte@parceladousa.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.2",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "klebervmv/easycurl": "1.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Parceladousa\\": "src/"
+        }
+    }
+}

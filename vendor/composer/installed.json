@@ -1,0 +1,52 @@
+{
+    "packages": [
+        {
+            "name": "klebervmv/easycurl",
+            "version": "1.0.5",
+            "version_normalized": "1.0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klebervmv/easyCurl.git",
+                "reference": "118d58069a1ea81e75c1ce1b228b5a2a1b104015"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klebervmv/easyCurl/zipball/118d58069a1ea81e75c1ce1b228b5a2a1b104015",
+                "reference": "118d58069a1ea81e75c1ce1b228b5a2a1b104015",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=7.2"
+            },
+            "time": "2021-05-24T17:31:57+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "klebervmv\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kleberton Vilela",
+                    "email": "klebervmv@gmail.com",
+                    "homepage": "https://github.com/klebervmv"
+                }
+            ],
+            "description": "EasyCurl is a library that facilitates the use of Curl requests",
+            "support": {
+                "issues": "https://github.com/klebervmv/easyCurl/issues",
+                "source": "https://github.com/klebervmv/easyCurl/tree/1.0.5"
+            },
+            "install-path": "../klebervmv/easycurl"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}
