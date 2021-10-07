@@ -10,6 +10,8 @@
         const ENDPOINT_PRODUCTION = 'https://api.parceladousa.com/v1/paymentapi';
         const SANDBOX = 'sandbox';
         const PRODUCTION = 'production';
+        const BRAZILIANCURRENCY = 'BRL';
+        const AMERICANCURRENCY = 'USD';
 
         protected $easyCurl;
         private $apiUrl;
