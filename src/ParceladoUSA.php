@@ -2,51 +2,42 @@
 
     namespace Parceladousa;
 
-    use klebervmv\EasyCurl;
+    use Parceladousa\Interfaces\RequestInterface;
+    use Parceladousa\Resources\ConsultPaymentOrder;
+    use Parceladousa\Resources\StartParceladoUSA;
 
-    class ParceladoUSA
+    class ParceladoUSA extends StartParceladoUSA
     {
-        const ENDPOINT_SANDBOX = 'https://apisandbox.parceladousa.com/v1/paymentapi';
-        const ENDPOINT_PRODUCTION = 'https://api.parceladousa.com/v1/paymentapi';
-        const SANDBOX = 'sandbox';
-        const PRODUCTION = 'production';
-
         private $gateway;
         private $fail;
-        private $easyCurl;
-        private $apiUrl;
         private $pubKey;
         private $merchantCode;
         private $payment_order_data;
+        private $result;
+        private $msg;
 
-
-        public function __construct($environment)
+        public function __construct(string $pubKey, string $merchantCode, string $environment)
         {
+            parent::__construct($environment);
             $this->fail = false;
-            $this->apiUrl = ($environment === self::SANDBOX)? self::ENDPOINT_SANDBOX : self::ENDPOINT_PRODUCTION;
-            $this->easyCurl = new EasyCurl($this->apiUrl);
+            $this->msg = '';
+            $this->pubKey = $pubKey;
+            $this->merchantCode = $merchantCode;
         }
 
-        private function requestAuth()
+        /**
+         * @param string $orderId
+         * @return $this
+         */
+        public function consultPaymentOrder(string $orderId): ?self
         {
-            $data = array (
-                'pubKey' => $this->pubKey,
-                'merchantCode' => $this->merchantCode
-            );
-
-            $request =  $this->easyCurl->render('POST', '/auth', $data)->send();
-
-            if($request->getHttpCode() !== 200){
-                return null;
-            }
-
-
-            return (object) $request->getResult();
+            return $this->send(new ConsultPaymentOrder($orderId));
         }
+
 
         public function request_payment_order($order): self
         {
-            if(!$token = $this->requestAuth()->token){
+            if (!$token = $this->requestAuth()->token) {
                 $this->fail = true;
                 return $this;
             }
@@ -73,7 +64,7 @@
                 ->render("POST", "/order", $data)
                 ->send();
 
-            if($this->payment_order_data->getHttpCode() !== 200){
+            if ($this->payment_order_data->getHttpCode() !== 200) {
                 $this->fail = true;
                 return $this;
             }
@@ -81,20 +72,68 @@
             return $this;
         }
 
-
-        public function setPubKey(string $pubKey): self
+        /**
+         * @return object|null
+         */
+        private function requestAuth(): ?object
         {
-            $this->pubKey = $pubKey;
-            return $this;
+            $data = array(
+                'pubKey' => $this->pubKey,
+                'merchantCode' => $this->merchantCode
+            );
 
+            $request = $this->easyCurl->render('POST', '/auth', $data)->send();
+
+            if ($request->getHttpCode() !== 200) {
+                return null;
+            }
+
+            return (object)$request->getResult();
         }
-        public function setMerchantCode(string $merchantCode): self
+
+
+        /**
+         * @param RequestInterface $requestInterface
+         * @return $this|null
+         */
+        private function send(RequestInterface $requestInterface): ?self
         {
-            $this->merchantCode = $merchantCode;
+            if (!$token = $this->requestAuth()->token) {
+                $this->fail = true;
+                return null;
+            }
+
+            $request = $this->easyCurl->resetHeader()
+                ->setHeader("Authorization:Bearer " . $token)
+                ->render($requestInterface->getMethod(), $requestInterface->getRoute(), $requestInterface->getData())
+                ->send();
+            $this->result = $request->getResult();
             return $this;
         }
 
-        public function fail(){
+        /**
+         * @return bool
+         */
+        public function fail(): bool
+        {
             return $this->fail;
         }
+
+        /**
+         * @return string
+         */
+        public function getMsg(): string
+        {
+            return $this->msg;
+        }
+
+        /**
+         * @return object
+         */
+        public function getResult(): object
+        {
+            return (object)$this->result;
+        }
+
+
     }

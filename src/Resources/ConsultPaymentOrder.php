@@ -2,28 +2,38 @@
 
     namespace Parceladousa\Resources;
 
-    use Parceladousa\ParceladoUSA;
+    use Parceladousa\Interfaces\RequestInterface;
 
-    class ConsultPaymentOrder extends ParceladoUSA
+    class ConsultPaymentOrder implements RequestInterface
     {
-        public function __construct($environment)
+        private $orderId;
+
+        public function __construct($orderId)
         {
+            $this->orderId = $orderId;
+        }
 
-            parent::__construct($environment);
-            if(!$token = $this->requestAuth()->token){
-                $this->fail = true;
-                return $this;
-            }
+        /**
+         * @return string
+         */
+        public function getRoute(): string
+        {
+            return "order/$this->orderId";
+        }
 
-            $this->payment_order_data = $this->easyCurl->resetHeader()
-                ->setHeader("Authorization:Bearer " . $token)
-                ->render("GET", "/order/$order_id")
-                ->send();
+        /**
+         * @return string
+         */
+        public function getMethod(): string
+        {
+            return "GET";
+        }
 
-            if($this->payment_order_data->getHttpCode() !== 200){
-                $this->fail = true;
-                return $this;
-            }
-            return $this;
+        /**
+         * @return object|null
+         */
+        public function getData(): ?object
+        {
+            return null;
         }
     }
