@@ -1,11 +1,12 @@
 <?php
 
-    use Parceladousa\Gateway;
+    use Parceladousa\ParceladoUSA;
 
     require '../vendor/autoload.php';
 
-    $gateway = (new Gateway('sandbox'))
-        ->setPubKey('4nv6OIBQSS6eTvwtyiriOCAVuI8iLNNC7QFq9JNv')
+    $gateway = new ParceladoUSA(ParceladoUSA::SANDBOX);
+    $gateway->setPubKey('4nv6OIBQSS6eTvwtyiriOCAVuI8iLNNC7QFq9JNv')
         ->setMerchantCode('1082');
 
-    var_dump($gateway->get_auth_token());
+    $gateway->consult_payment_order('19704');
+//    var_dump($gateway->requestAuth('19704'));
