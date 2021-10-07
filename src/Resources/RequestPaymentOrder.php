@@ -2,7 +2,10 @@
 
     namespace Parceladousa\Resources;
 
-    class RequestPaymentOrder
+    use Parceladousa\Interfaces\RequestInterface;
+    use stdClass;
+
+    class RequestPaymentOrder implements RequestInterface
     {
         private $amount;
         private $currency;
@@ -17,35 +20,39 @@
         private $city;
         private $state;
 
+        public function __construct()
+        {
+        }
+
         /**
-         * @param string|null $amount
+         * @param float $amount
          * @return $this
          */
-        public function setAmount(?string  $amount = '' ): self
+        public function setAmount(float  $amount): self
         {
             $this->amount = $amount;
             return $this;
         }
 
         /**
-         * @param string|null $currency
+         * @param string $currency
          * @return $this
          */
-        public function setCurrency(?string  $currency = '' ): self
+        public function setCurrency(string  $currency = 'USD' ): self
         {
             $this->currency = $currency;
             return $this;
         }
-
-        /**
-         * @param string|null $client
-         * @return $this
-         */
-        public function setClient(?string  $client = '' ): self
-        {
-            $this->client = $client;
-            return $this;
-        }
+//
+//        /**
+//         * @param string|null $client
+//         * @return $this
+//         */
+//        public function setClient(?string  $client = '' ): self
+//        {
+//            $this->client = $client;
+//            return $this;
+//        }
 
         /**
          * @param string|null $name
@@ -135,5 +142,44 @@
         {
             $this->state = $state;
             return $this;
-        }        
+        }
+
+        /**
+         * @param string $callback
+         * @return $this
+         */
+        public function setCallback(string  $callback): self
+        {
+            $this->callback = $callback;
+            return $this;
+        }
+
+        public function getRoute(): string
+        {
+            return "order";
+        }
+
+        public function getMethod(): string
+        {
+            return "POST";
+        }
+
+        public function getData(): ?object
+        {
+            $data = new stdClass();
+            $data->amount = $this->amount;
+            $data->currency = $this->currency;
+            $data->client = new stdClass();
+            $data->client->name = $this->name;
+            $data->client->email = $this->email;
+            $data->client->phone = $this->phone;
+            $data->client->doc = $this->document;
+            $data->client->cep = $this->cep;
+            $data->client->address = $this->address;
+            $data->client->addressNumber = $this->addressNumber;
+            $data->client->city = $this->city;
+            $data->client->state = $this->state;
+            $data->callback = $this->callback;
+            return (object) $data;
+        }
     }

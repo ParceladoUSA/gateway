@@ -4,25 +4,26 @@
 
     use Parceladousa\Interfaces\RequestInterface;
     use Parceladousa\Resources\ConsultPaymentOrder;
+    use Parceladousa\Resources\RequestPaymentOrder;
     use Parceladousa\Resources\StartParceladoUSA;
 
     class ParceladoUSA extends StartParceladoUSA
     {
-        private $gateway;
         private $fail;
         private $pubKey;
         private $merchantCode;
-        private $payment_order_data;
         private $result;
         private $msg;
+        private $callback;
 
-        public function __construct(string $pubKey, string $merchantCode, string $environment)
+        public function __construct(string $pubKey, string $merchantCode, string $environment, string $callback)
         {
             parent::__construct($environment);
             $this->fail = false;
             $this->msg = '';
             $this->pubKey = $pubKey;
             $this->merchantCode = $merchantCode;
+            $this->callback = $callback;
         }
 
         /**
@@ -34,42 +35,26 @@
             return $this->send(new ConsultPaymentOrder($orderId));
         }
 
-
-        public function request_payment_order($order): self
+        /**
+         * @param string $orderId
+         * @return $this
+         */
+        public function requestPaymentOrder(object $data): ?self
         {
-            if (!$token = $this->requestAuth()->token) {
-                $this->fail = true;
-                return $this;
-            }
-
-            $data = array(
-                'amount' => $amount,
-                "currency" => 'USD',
-                'client' => array(
-                    'name' => $name,
-                    'email' => $email,
-                    'phone' => $phone,
-                    'doc' => $document,
-                    'cep' => $cep,
-                    'address' => $address,
-                    'addressNumber' => $number,
-                    'city' => $city,
-                    'state' => $state
-                ),
-                'callback' => ''
-            );
-
-            $this->payment_order_data = $this->easyCurl->resetHeader()
-                ->setHeader("Authorization:Bearer " . $token)
-                ->render("POST", "/order", $data)
-                ->send();
-
-            if ($this->payment_order_data->getHttpCode() !== 200) {
-                $this->fail = true;
-                return $this;
-            }
-
-            return $this;
+            $request = new RequestPaymentOrder();
+            $request->setAmount($data->amount);
+            $request->setCurrency($data->currency);
+            $request->setName($data->name);
+            $request->setEmail($data->amount);
+            $request->setPhone($data->amount);
+            $request->setDocument($data->amount);
+            $request->setCep($data->amount);
+            $request->setAddress($data->amount);
+            $request->setAddressNumber($data->amount);
+            $request->setCity($data->amount);
+            $request->setState($data->amount);
+            $request->setCallback($this->callback);
+            return $this->send($request);
         }
 
         /**
@@ -90,7 +75,6 @@
 
             return (object)$request->getResult();
         }
-
 
         /**
          * @param RequestInterface $requestInterface
