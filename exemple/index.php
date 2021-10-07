@@ -11,10 +11,10 @@
         "https://SEUHOST/seuendpoint"
     );
 
-    //Registrar Ordem de Pagamento
+//    //Registrar Ordem de Pagamento
 //    $data = new stdClass();
 //    $data->amount = 56.89;
-//    $data->currency = 'USD';
+//    $data->currency = ParceladoUSA::AMERICANCURRENCY;
 //    $data->name = 'Rogerio Marinho';
 //    $data->email = 'rgda@seudominio.com';
 //    $data->phone = '(99)99999-9999';
@@ -24,11 +24,10 @@
 //    $data->addressNumber = '1';
 //    $data->city = 'Cidade';
 //    $data->state = 'ST';
-//    $data->callback = 'http://SEUHOST/seuendpoint';
 //    $gateway->requestPaymentOrder($data);
 //    var_dump($gateway->getResult());
 
-    //Consultar Ordem de Pagamento
-//    $gateway->consultPaymentOrder('19704');
+//    //Consultar Ordem de Pagamento
+//    $gateway->consultPaymentOrder('19712');
 //    var_dump($gateway->getResult());
 

@@ -3,13 +3,13 @@
     namespace Parceladousa\Resources;
 
     use Parceladousa\Interfaces\RequestInterface;
+    use Parceladousa\ParceladoUSA;
     use stdClass;
 
     class RequestPaymentOrder implements RequestInterface
     {
         private $amount;
         private $currency;
-        private $client;
         private $name;
         private $email;
         private $phone;
@@ -19,10 +19,6 @@
         private $addressNumber;
         private $city;
         private $state;
-
-        public function __construct()
-        {
-        }
 
         /**
          * @param float $amount
@@ -38,21 +34,11 @@
          * @param string $currency
          * @return $this
          */
-        public function setCurrency(string  $currency = 'USD' ): self
+        public function setCurrency(string  $currency = ParceladoUSA::AMERICANCURRENCY ): self
         {
             $this->currency = $currency;
             return $this;
         }
-//
-//        /**
-//         * @param string|null $client
-//         * @return $this
-//         */
-//        public function setClient(?string  $client = '' ): self
-//        {
-//            $this->client = $client;
-//            return $this;
-//        }
 
         /**
          * @param string|null $name
