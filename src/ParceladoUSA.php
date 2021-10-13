@@ -45,14 +45,14 @@
             $request->setAmount($data->amount);
             $request->setCurrency($data->currency);
             $request->setName($data->name);
-            $request->setEmail($data->amount);
-            $request->setPhone($data->amount);
-            $request->setDocument($data->amount);
-            $request->setCep($data->amount);
-            $request->setAddress($data->amount);
-            $request->setAddressNumber($data->amount);
-            $request->setCity($data->amount);
-            $request->setState($data->amount);
+            $request->setEmail($data->email);
+            $request->setPhone($data->phone);
+            $request->setDocument($data->doc);
+            $request->setCep($data->cep);
+            $request->setAddress($data->address);
+            $request->setAddressNumber($data->addressNumber);
+            $request->setCity($data->city);
+            $request->setState($data->state);
             $request->setCallback($this->callback);
             return $this->send($request);
         }
