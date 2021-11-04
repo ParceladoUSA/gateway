@@ -31,3 +31,10 @@
 //    $gateway->consultPaymentOrder('19712');
 //    var_dump($gateway->getResult());
 
+
+//    //Calcular Valores
+//    $data = new stdClass();
+//    $data->amount = 56.89;
+//    $gateway->calculateValues($data);
+//    var_dump($gateway->getResult());
+
