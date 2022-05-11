@@ -9,6 +9,7 @@
     class RequestPaymentOrder implements RequestInterface
     {
         private $amount;
+        private $invoice;
         private $currency;
         private $name;
         private $email;
@@ -27,6 +28,16 @@
         public function setAmount(float  $amount): self
         {
             $this->amount = $amount;
+            return $this;
+        }
+
+        /**
+         * @param string|null $invoice
+         * @return $this
+         */
+        public function setInvoice(?string  $invoice = '' ): self
+        {
+            $this->invoice = $invoice;
             return $this;
         }
 
@@ -154,6 +165,7 @@
         {
             $data = new stdClass();
             $data->amount = $this->amount;
+            $data->invoice = $this->invoice;
             $data->currency = $this->currency;
             $data->client = new stdClass();
             $data->client->name = $this->name;
